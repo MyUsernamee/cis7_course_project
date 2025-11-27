@@ -33,9 +33,6 @@ jobs:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-          - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -77,4 +74,4 @@ jobs:
     - name: Build Artifact
       uses: actions/upload-artifact@v5.0.0
       with:
-        path: ${{ steps.strings.outputs.build-output-dir }}
+        path: ${{ matrix.os }}-${{ steps.strings.outputs.build-output-dir }}
