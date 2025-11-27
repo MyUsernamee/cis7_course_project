@@ -1,8 +1,8 @@
 #pragma once
 
 #include <set>
-
 #include "card.hpp"
+
 ///
 /// \brief A class representing a deck of cards.
 /// This internally uses a `std::set` to represent cards, because we assume have no duplicates of cards.
