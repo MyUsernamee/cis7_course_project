@@ -10,5 +10,5 @@ TEST(Deck, CTor) {
 
     EXPECT_TRUE(deck.take_card(Card("KH")));
     EXPECT_FALSE(deck.has_card(Card("KH")));
-
+    EXPECT_EQ(deck.get_cards().size(), 51);
 }

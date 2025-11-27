@@ -3,7 +3,7 @@
 #include <optional>
 
 ///
-/// A simple data class that represents a singular card.
+/// \brief A simple data class that represents a singular card.
 ///
 struct Card {
 
@@ -32,16 +32,16 @@ struct Card {
     };
 
     Card(Suit suit, Rank rank);
-    Card(std::string string_repr); /// This is can throw an exception.
+    Card(std::string string_repr); ///< This is can throw an exception.
 
     const bool operator< (Card const& b) const { 
         return int(_rank) + int(_suit) * 13 < int(b._rank) + int(b._suit) * 13;
     }
 
-    Suit _suit; /// The suit of the card.
-    Rank _rank; /// The rank of the card.
+    Suit _suit; ///< The suit of the card.
+    Rank _rank; ///< The rank of the card.
 
-    std::string as_string(); /// Returns a nices unicode representation of this card for printing.
+    std::string as_string(); ///< Returns a nices unicode representation of this card for printing.
     static char rank_as_char(Rank rank);
     static char suit_as_char(Suit suit);
     static std::optional<Rank> rank_from_char(char crank);
