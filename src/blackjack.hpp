@@ -39,9 +39,7 @@ public:
                                           ///< and returns the game state the new game state. For example if you were in the place bets state, and you placed a bet of $100 the next state returned would be `PLAYER_TURN` for the players turn.
 
     GameState step(); ///< Overload for the `step` function. Assumes default options in `step`. Best used when the player has no input, or input would have no effect.
-    GameState do_turn(bool hit); ///< Alias for `step` function. Best used when we are in the `PLAYER_TURN` state, and the `bet` parameter has no effect.
     GameState bet(double bet); ///< Alias for `step` function. Best used when we are in the `PLACE_BETS` state, and the `hit` parameter has no effect.
-
     GameState hit(); ///< Helper alias for step.
     GameState stand(); ///< Helper alias for step.
     

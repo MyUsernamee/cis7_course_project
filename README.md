@@ -19,7 +19,7 @@ All code is documented in the `docs` folder. It contains the required course doc
 For comprehensive, up to date, code documentation, use [doxygen](https://www.doxygen.nl/index.html).
 Otherwise `doxygen` docs should be generated and stored in the `docs/doxygen/` folder.
 
-## Compiling {#compiling}
+## Compiling
 
 There should be auto-compiled binaries in the [releases]() tabs, or as [artifacts]() in GitHub actions.
 
