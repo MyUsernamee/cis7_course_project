@@ -1,8 +1,12 @@
 #include <iostream>
 
+#include "blackjack.hpp"
 #include "card.hpp"
 
 int main () {
-    std::cout << Card(Card::DIAMONDS, Card::KING).as_string() << std::endl;
+
+    BlackJack game = BlackJack();
+
+    
     return 0;
 }

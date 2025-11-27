@@ -18,6 +18,9 @@ public:
     bool take_card(Card::Suit suit, Card::Rank rank); ///< Same as `Deck::take_card(Card card)` but
                                                       ///< with rank and suit instead.
 
+    Card take_random_card(); ///< \brief Removes one random card from the deck.
+
+
     void add_card(Card card); ///< Adds a card to the deck, does nothing if card is already in deck.
     bool add_card(Card::Rank rank, Card::Suit suit); ///< Same as `Deck::add_card(Card card)` but
                                                      ///< with rank and suit instead.

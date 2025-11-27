@@ -3,7 +3,7 @@
 #include "deck.hpp"
 
 ///
-/// This represents the actual Black Jack game.
+/// \brief This represents the actual Black Jack game.
 /// This assumes a fair game, with a singular deck.
 /// There is only one player and it stores internal state.
 /// Internally uses a Finite State Machine to keep track of the game state.
@@ -45,8 +45,28 @@ public:
     GameState hit(); ///< Helper alias for step.
     GameState stand(); ///< Helper alias for step.
     
+    void render(); ///< \brief Renders the game to the terminal.
+    
 private:
     Deck _deck;
     GameState _game_state;
+    double _bet;
+    std::set<Card> _player_hand;
+    std::set<Card> _dealer_hand;
+    double _player_money;
+
+
+    void deal_cards();
+    void deal_card(std::set<Card>& hand);
+
+    void do_dealer_move();
+
+    bool did_player_bust();
+    bool did_dealer_bust();
+
+    int get_hand_value(std::set<Card> hand);
+    int get_hand_value(std::set<Card> hand, bool soft_hand);
+
+    double get_bet_multiplier();
 };
 
