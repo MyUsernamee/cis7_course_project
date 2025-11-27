@@ -145,6 +145,23 @@ std::string Card::as_string() {
     return result;
 }
 
+char Card::suit_as_char(Suit rank) {
+    switch (rank) {
+        case Suit::DIAMONDS:
+            return 'D';
+        case Suit::CLUBS:
+            return 'C';
+        case Suit::HEARTS:
+            return 'H';
+        case Suit::SPADES:
+            return 'S';
+        default:
+            return 'H'; // Hideen
+    }
+
+    return '\0'; // Should be unreachable
+}
+
 char Card::rank_as_char(Rank rank) {
     switch (rank) {
         case Rank::JACK:
@@ -156,7 +173,7 @@ char Card::rank_as_char(Rank rank) {
         case Rank::ACE:
             return 'A';
         default:
-            return char(rank) + '0';
+            return char(rank) + '1';
     }
     
     return '\0'; // Should be unreachable
