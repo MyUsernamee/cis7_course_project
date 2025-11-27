@@ -1,5 +1,4 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy DoxyGen with GitHub Pages dependencies preinstalled
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -33,7 +32,7 @@ jobs:
         with:
           doxyfile-path: 'Doxyfile'
       - name: Copy html files
-        run: 'cp -r html ./_site'
+        run: 'cp -r docs/html/* ./_site'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
