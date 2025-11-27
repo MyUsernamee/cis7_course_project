@@ -74,4 +74,5 @@ jobs:
     - name: Build Artifact
       uses: actions/upload-artifact@v5.0.0
       with:
-        path: ${{ matrix.os }}-${{ steps.strings.outputs.build-output-dir }}
+        name : ${{ matrix.os }}.zip
+        path: ${{ steps.strings.outputs.build-output-dir }}
