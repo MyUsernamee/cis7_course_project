@@ -12,6 +12,24 @@ TEST(Card, RankAsChar) {
 }
 
 TEST(Card, SuitAsChar) {
-    EXPECT_EQ(Card::suit_as_char(Card::HIDDEN), 'H');
+    EXPECT_EQ(Card::suit_as_char(Card::HIDDEN), '#');
     EXPECT_EQ(Card::suit_as_char(Card::DIAMONDS), 'D');
+}
+
+TEST(Card, RankFromChar) {
+    EXPECT_EQ(Card::rank_from_char('A'), Card::ACE);
+    EXPECT_EQ(Card::rank_from_char('5'), Card::FIVE);
+}
+
+TEST(Card, SuitFromChar) {
+    EXPECT_EQ(Card::suit_from_char('#'), Card::HIDDEN);
+    EXPECT_EQ(Card::suit_from_char('D'), Card::DIAMONDS);
+}
+
+TEST(Card, StringCTor) {
+    EXPECT_NO_THROW(Card("2H"));
+    EXPECT_NO_THROW(Card("#"));
+    EXPECT_ANY_THROW(Card("x"));
+
+    EXPECT_EQ(Card("4H")._rank, Card::FOUR);
 }

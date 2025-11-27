@@ -1,8 +1,16 @@
 #include "card.hpp"
-#include <codecvt>
-#include <locale>
 
-Card::Card(Suit suit, Rank rank) :  _suit(suit), _rank(rank) { }
+Card::Card(Card::Suit suit, Card::Rank rank) :  _suit(suit), _rank(rank) { }
+Card::Card(std::string string_repr) {
+    if (string_repr == "#") {
+        _suit = Suit::HIDDEN;
+        _rank = Rank::ACE;
+        return;
+    }
+
+    _rank = rank_from_char(string_repr[0]).value();
+    _suit = suit_from_char(string_repr[1]).value();
+}
 
 std::string Card::as_string() {
 
@@ -156,7 +164,7 @@ char Card::suit_as_char(Suit rank) {
         case Suit::SPADES:
             return 'S';
         default:
-            return 'H'; // Hideen
+            return '#'; // Hidden
     }
 
     return '\0'; // Should be unreachable
@@ -177,4 +185,45 @@ char Card::rank_as_char(Rank rank) {
     }
     
     return '\0'; // Should be unreachable
+}
+
+std::optional<Card::Rank> Card::rank_from_char(char crank) {
+    switch (crank) {
+        case 'J':
+            return Rank::JACK;
+        case 'Q':
+            return Rank::QUEEN;
+        case 'K':
+            return Rank::KING;
+        case 'A':
+            return Rank::ACE;
+        default:
+            if (crank <= '1')
+                return std::nullopt;
+
+            int index = int(crank - '1');
+            if (index >= 13)
+                return std::nullopt;
+            
+            return Card::Rank(int(index));
+    }
+
+    return std::nullopt;
+}
+
+std::optional<Card::Suit> Card::suit_from_char(char csuit) {
+    switch (csuit) {
+        case 'D':
+            return Card::DIAMONDS;
+        case 'C':
+            return Card::CLUBS;
+        case 'S':
+            return Card::SPADES;
+        case 'H':
+            return Card::HEARTS;
+        case '#':
+            return Card::HIDDEN;
+    }
+
+    return std::nullopt;
 }

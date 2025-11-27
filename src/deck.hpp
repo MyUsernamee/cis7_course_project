@@ -15,7 +15,7 @@ public:
 
     bool take_card(Card card); /// Attempts to remove a card from the deck. 
                                /// Returns true if the deck contains the card and removes if it does.
-    bool take_card(Card::Rank rank, Card::Suit suit); /// Same as `Deck::take_card(Card card)` but
+    bool take_card(Card::Suit suit, Card::Rank rank); /// Same as `Deck::take_card(Card card)` but
                                                       /// with rank and suit instead.
 
     void add_card(Card card); /// Adds a card to the deck, does nothing if card is already in deck.
