@@ -32,9 +32,7 @@ player disadvantage of about 6%.
 
 --- 
 
-1. Based on the above description of Black Jack, create a C++ program that represents the Black
-
-Jack casino game using single card deck (52 cards). In the program, provide player advantage probability in for each hand.
+1. Based on the above description of Black Jack, create a C++ program that represents the Black Jack casino game using single card deck (52 cards). In the program, provide player advantage probability in for each hand.
 
  - The program must show dealer hand and player hand.
  - The program must determine the winning probability for each player hand before and after card hit. *Probability cannot be hard-coded. Calculation of probability must be integrated into the program.
