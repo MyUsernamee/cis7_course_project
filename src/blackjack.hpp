@@ -57,7 +57,7 @@ private:
     void deal_cards();
     void deal_card(std::set<Card>& hand);
 
-    void do_dealer_move();
+    bool do_dealer_move();
 
     bool did_player_bust();
     bool did_dealer_bust();

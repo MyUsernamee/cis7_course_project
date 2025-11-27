@@ -24,130 +24,179 @@ std::string Card::as_string() {
     switch (_suit) {
         case Suit::HIDDEN:
             result = "\U0001F0A0";
+            break;
         case Suit::SPADES: 
             switch(_rank) {
                 case Rank::ACE:
                     result = "\U0001F0A1";
+                    break;
                 case Rank::TWO:
                     result = "\U0001F0A2";
+                    break;
                 case Rank::THREE:
                     result = "\U0001F0A3";
+                    break;
                 case Rank::FOUR:
                     result = "\U0001F0A4";
+                    break;
                 case Rank::FIVE:
                     result = "\U0001F0A5";
+                    break;
                 case Rank::SIX:
                     result = "\U0001F0A6";
+                    break;
                 case Rank::SEVEN:
                     result = "\U0001F0A7";
+                    break;
                 case Rank::EIGHT:
                     result = "\U0001F0A8";
+                    break;
                 case Rank::NINE:
                     result = "\U0001F0A9";
+                    break;
                 case Rank::TEN:
                     result = "\U0001F0AA";
+                    break;
                 case Rank::JACK:
                     result = "\U0001F0AB";
+                    break;
                 case Rank::QUEEN:
                     result = "\U0001F0AD";
+                    break;
                 case Rank::KING:
                     result = "\U0001F0AE";
+                    break;
             }
             break;
-
         case Suit::HEARTS:
             switch(_rank) {
                 case Rank::ACE:
                     result = "\U0001F0B1";
+                    break;
                 case Rank::TWO:
                     result = "\U0001F0B2";
+                    break;
                 case Rank::THREE:
                     result = "\U0001F0B3";
+                    break;
                 case Rank::FOUR:
                     result = "\U0001F0B4";
+                    break;
                 case Rank::FIVE:
                     result = "\U0001F0B5";
+                    break;
                 case Rank::SIX:
                     result = "\U0001F0B6";
+                    break;
                 case Rank::SEVEN:
                     result = "\U0001F0B7";
+                    break;
                 case Rank::EIGHT:
                     result = "\U0001F0B8";
+                    break;
                 case Rank::NINE:
                     result = "\U0001F0B9";
+                    break;
                 case Rank::TEN:
                     result = "\U0001F0BA";
+                    break;
                 case Rank::JACK:
                     result = "\U0001F0BB";
+                    break;
                 case Rank::QUEEN:
                     result = "\U0001F0BD";
+                    break;
                 case Rank::KING:
                     result = "\U0001F0BE";
+                    break;
             }
             break;
-
         case Suit::DIAMONDS: 
             switch(_rank) {
                 case Rank::ACE:
                     result = "\U0001F0C1";
+                    break;
                 case Rank::TWO:
                     result = "\U0001F0C2";
+                    break;
                 case Rank::THREE:
                     result = "\U0001F0C3";
+                    break;
                 case Rank::FOUR:
                     result = "\U0001F0C4";
+                    break;
                 case Rank::FIVE:
                     result = "\U0001F0C5";
+                    break;
                 case Rank::SIX:
                     result = "\U0001F0C6";
+                    break;
                 case Rank::SEVEN:
                     result = "\U0001F0C7";
+                    break;
                 case Rank::EIGHT:
                     result = "\U0001F0C8";
+                    break;
                 case Rank::NINE:
                     result = "\U0001F0C9";
+                    break;
                 case Rank::TEN:
                     result = "\U0001F0CA";
+                    break;
                 case Rank::JACK:
                     result = "\U0001F0CB";
+                    break;
                 case Rank::QUEEN:
                     result = "\U0001F0CD";
+                    break;
                 case Rank::KING:
                     result = "\U0001F0CE";
+                    break;
             }
             break;
-
         case Suit::CLUBS:
             switch(_rank) {
                 case Rank::ACE:
                     result = "\U0001F0D1";
+                    break;
                 case Rank::TWO:
                     result = "\U0001F0D2";
+                    break;
                 case Rank::THREE:
                     result = "\U0001F0D3";
+                    break;
                 case Rank::FOUR:
                     result = "\U0001F0D4";
+                    break;
                 case Rank::FIVE:
                     result = "\U0001F0D5";
+                    break;
                 case Rank::SIX:
                     result = "\U0001F0D6";
+                    break;
                 case Rank::SEVEN:
                     result = "\U0001F0D7";
+                    break;
                 case Rank::EIGHT:
                     result = "\U0001F0D8";
+                    break;
                 case Rank::NINE:
                     result = "\U0001F0D9";
+                    break;
                 case Rank::TEN:
                     result = "\U0001F0DA";
+                    break;
                 case Rank::JACK:
                     result = "\U0001F0DB";
+                    break;
                 case Rank::QUEEN:
                     result = "\U0001F0DD";
+                    break;
                 case Rank::KING:
                     result = "\U0001F0DE";
+                    break;
             }
             break;
-
     }      
 
     return result;

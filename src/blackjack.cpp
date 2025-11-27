@@ -1,4 +1,5 @@
 #include "blackjack.hpp"
+#include <iostream>
 
 BlackJack::BlackJack() {
     _deck = Deck();
@@ -11,6 +12,7 @@ BlackJack::GameState BlackJack::step(bool hit, double bet) {
             _bet = bet;
             _game_state = GameState::PLAYER_TURN;
             deal_cards();
+            break;
         case GameState::PLAYER_TURN:
             if (!hit) {
                 _game_state = GameState::DEALER_TURN;
@@ -25,26 +27,34 @@ BlackJack::GameState BlackJack::step(bool hit, double bet) {
             break;
         case GameState::PLAYER_BUST:
             _game_state = GameState::DEALER_TURN;
-        case GameState::DEALER_TURN:
-            do_dealer_move();
-
-            if (did_dealer_bust())
-                _game_state = GameState::DEALER_BUST;
-
-            if (get_hand_value(_dealer_hand) > get_hand_value(_player_hand))
-                _game_state = GameState::COUNT;
-
             break;
+        case GameState::DEALER_TURN: 
+            {
+                bool dealer_hit = do_dealer_move();
+
+                if (did_dealer_bust()) {
+                    _game_state = GameState::DEALER_BUST;
+                    break;
+                }
+
+                if (get_hand_value(_dealer_hand) > get_hand_value(_player_hand) || !dealer_hit) {
+                    _game_state = GameState::COUNT;
+                    break;
+                }
+
+                break;
+            }
         case GameState::DEALER_BUST:
             _game_state = GameState::COUNT;
+            break;
         case GameState::COUNT:
             _player_money += _bet * get_bet_multiplier();
             _game_state = GameState::RESET;
             break;
         case GameState::RESET:
             _deck = Deck();
-            auto _ = _player_hand.empty();
-            auto _ = _dealer_hand.empty();
+            _player_hand.clear();
+            _dealer_hand.clear();
             
             _game_state = GameState::PLACE_BETS;
             break;
@@ -76,9 +86,12 @@ bool BlackJack::did_dealer_bust() {
     return get_hand_value(_dealer_hand) > 21;
 }
 
-void BlackJack::do_dealer_move() {
-    if (get_hand_value(_dealer_hand) <= 16)
+bool BlackJack::do_dealer_move() {
+    if (get_hand_value(_dealer_hand) <= 16) {
         deal_card(_dealer_hand);
+        return true;
+    }
+    return false;
 }
 
 int BlackJack::get_hand_value(std::set<Card> hand, bool soft_hand) {
@@ -119,4 +132,21 @@ double BlackJack::get_bet_multiplier() {
         return 1;
 
     return 0; // Loose
+}
+
+void BlackJack::render() {
+    std::cout << "Dealer hand: ";
+    for (auto card : _dealer_hand)
+        std::cout << card.as_string();
+
+    std::cout << get_hand_value(_dealer_hand) << std::endl;
+
+    std::cout << "Player hand: ";
+    for (auto card : _player_hand)
+        std::cout << card.as_string();
+
+    std::cout << get_hand_value(_player_hand) << std::endl;
+
+    std::cout << "GameState: " << _game_state << std::endl;
+
 }
