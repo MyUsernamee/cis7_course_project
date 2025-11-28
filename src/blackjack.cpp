@@ -9,9 +9,11 @@ BlackJack::BlackJack() {
 BlackJack::GameState BlackJack::step(bool hit) {
     switch(_game_state) {
         case GameState::PLACE_BETS:
-            _game_state = GameState::PLAYER_TURN;
+            _game_state = GameState::PLAYER_TURN_DOUBLE_DOWN;
             deal_cards();
             break;
+        case GameState::PLAYER_TURN_DOUBLE_DOWN:
+            _game_state = GameState::PLAYER_TURN;
         case GameState::PLAYER_TURN:
             if (!hit) {
                 _game_state = GameState::DEALER_TURN;
@@ -67,7 +69,7 @@ BlackJack::GameState BlackJack::step() {
     return step(false);
 }
 
-BlackJack::GameState BlackJack::bet(double bet) {
+BlackJack::GameState BlackJack::bet(int bet) {
     if (_game_state != GameState::PLACE_BETS)
         return _game_state;
 
@@ -180,16 +182,16 @@ std::set<Card> BlackJack::get_dealer_hand() {
     return _dealer_hand;
 }
 
-double BlackJack::get_money() {
+int BlackJack::get_money() {
     return _player_money;
 }
-void BlackJack::set_money(double money) {
+void BlackJack::set_money(int money) {
     _player_money = money;
 }
-double BlackJack::get_bet() {
+int BlackJack::get_bet() {
     return _bet;
 }
-void BlackJack::set_bet(double bet) {
+void BlackJack::set_bet(int bet) {
     if (_game_state != GameState::PLACE_BETS)
         return;
     
@@ -198,4 +200,54 @@ void BlackJack::set_bet(double bet) {
 
 BlackJack::GameState BlackJack::get_state() {
     return _game_state;
+}
+
+double BlackJack::get_probabililty_bust(Deck deck, std::set<Card> hand) {
+    int total_bad_hands = 0;
+
+    for (auto card : deck.get_cards()) {
+        std::set<Card> possible_hand = hand;
+        possible_hand.insert(card);
+
+        if (get_hand_value(possible_hand) > 21) 
+            total_bad_hands += 1;
+    }
+
+    return double(total_bad_hands) / deck.get_cards().size();
+}
+double BlackJack::get_probabililty_bust(std::set<Card> hand) {
+    return get_probabililty_bust(_deck, hand);
+}
+
+BlackJack::GameState BlackJack::double_down() {
+    if (_game_state != GameState::PLAYER_TURN_DOUBLE_DOWN)
+        return _game_state;
+
+    _player_money -= _bet;
+    _bet *= 2;
+
+    deal_card(_player_hand);
+
+    if (did_player_bust())
+        _game_state = GameState::PLAYER_BUST;
+    else
+        _game_state = GameState::DEALER_TURN;
+
+    return _game_state;
+}
+
+std::optional<BlackJack::GameResults> BlackJack::get_results() {
+    if (_game_state != GameState::COUNT)
+        return std::nullopt;
+
+    auto player_hand_value = get_hand_value(_player_hand);
+    auto dealer_hand_value = get_hand_value(_dealer_hand);
+
+    if (player_hand_value == dealer_hand_value || (did_player_bust() && did_dealer_bust()))
+        return GameResults::TIE;
+
+    if (player_hand_value > dealer_hand_value && !did_player_bust() || did_dealer_bust())
+        return GameResults::WIN;
+    
+    return GameResults::LOSS;
 }
