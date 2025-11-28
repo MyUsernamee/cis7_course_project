@@ -12,7 +12,7 @@ int main () {
     BlackJack game = BlackJack();
     
     for (int i = 0; i <= 100; i++) {
-        game.step(false, 100.0);
+        game.step(false);
         game.render();
     }
     

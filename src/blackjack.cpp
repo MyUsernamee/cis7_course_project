@@ -6,10 +6,9 @@ BlackJack::BlackJack() {
     _game_state = GameState::PLACE_BETS;
 }
 
-BlackJack::GameState BlackJack::step(bool hit, double bet) {
+BlackJack::GameState BlackJack::step(bool hit) {
     switch(_game_state) {
         case GameState::PLACE_BETS:
-            _bet = bet;
             _game_state = GameState::PLAYER_TURN;
             deal_cards();
             break;
@@ -63,6 +62,29 @@ BlackJack::GameState BlackJack::step(bool hit, double bet) {
 
     return _game_state;
 };
+
+BlackJack::GameState BlackJack::step() {
+    return step(false);
+}
+
+BlackJack::GameState BlackJack::bet(double bet) {
+    if (_game_state != GameState::PLACE_BETS)
+        return _game_state;
+
+    _bet = bet;
+    _player_money -= bet;
+
+    return step(false);
+}
+
+BlackJack::GameState BlackJack::bet() {
+    if (_game_state != GameState::PLACE_BETS)
+        return _game_state;
+
+    _player_money -= _bet;
+    return step(false);
+}
+
 
 void BlackJack::deal_cards() {
 
@@ -149,4 +171,31 @@ void BlackJack::render() {
 
     std::cout << "GameState: " << _game_state << std::endl;
 
+}
+
+std::set<Card> BlackJack::get_hand() {
+    return _player_hand;
+}
+std::set<Card> BlackJack::get_dealer_hand() {
+    return _dealer_hand;
+}
+
+double BlackJack::get_money() {
+    return _player_money;
+}
+void BlackJack::set_money(double money) {
+    _player_money = money;
+}
+double BlackJack::get_bet() {
+    return _bet;
+}
+void BlackJack::set_bet(double bet) {
+    if (_game_state != GameState::PLACE_BETS)
+        return;
+    
+    _bet = bet;
+}
+
+BlackJack::GameState BlackJack::get_state() {
+    return _game_state;
 }

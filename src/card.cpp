@@ -229,6 +229,8 @@ char Card::rank_as_char(Rank rank) {
             return 'K';
         case Rank::ACE:
             return 'A';
+        case Rank::TEN:
+            return '0';
         default:
             return char(rank) + '1';
     }
@@ -246,6 +248,8 @@ std::optional<Card::Rank> Card::rank_from_char(char crank) {
             return Rank::KING;
         case 'A':
             return Rank::ACE;
+        case '0':
+            return Rank::TEN;
         default:
             if (crank <= '1')
                 return std::nullopt;
@@ -275,4 +279,8 @@ std::optional<Card::Suit> Card::suit_from_char(char csuit) {
     }
 
     return std::nullopt;
+}
+
+std::string Card::as_text() {
+    return std::string({rank_as_char(_rank), suit_as_char(_suit)});
 }

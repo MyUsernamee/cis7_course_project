@@ -14,7 +14,8 @@ FetchContent_MakeAvailable(googletest)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Used for LSP
 
-file(GLOB_RECURSE SOURCES ./src/*.cpp)
+file(GLOB SOURCES ./src/*.cpp)
+list(FILTER SOURCES EXCLUDE REGEX "main.cpp$")
 
 # TESTING #
 enable_testing()
@@ -30,4 +31,9 @@ include(GoogleTest)
 gtest_discover_tests(test_executable)
 # END TESTING #
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
+
+find_package(raylib)
+add_executable(${PROJECT_NAME}_raylib ${SOURCES} src/raylib_renderer/main.cpp)
+target_link_libraries(${PROJECT_NAME}_raylib raylib)
+target_include_directories(${PROJECT_NAME}_raylib PRIVATE ./src/)

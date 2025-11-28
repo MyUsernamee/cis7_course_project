@@ -42,6 +42,7 @@ struct Card {
     Rank _rank; ///< The rank of the card.
 
     std::string as_string(); ///< Returns a nices unicode representation of this card for printing.
+    std::string as_text(); ///< Returns a simple text based representation of the card;
     static char rank_as_char(Rank rank);
     static char suit_as_char(Suit suit);
     static std::optional<Rank> rank_from_char(char crank);

@@ -35,24 +35,34 @@ public:
                ///< information to the player.
     };
 
-    GameState step(bool hit, double bet); ///< Like the "main loop", steps the game
+    GameState step(bool hit); ///< Like the "main loop", steps the game
                                           ///< and returns the game state the new game state. For example if you were in the place bets state, and you placed a bet of $100 the next state returned would be `PLAYER_TURN` for the players turn.
 
     GameState step(); ///< Overload for the `step` function. Assumes default options in `step`. Best used when the player has no input, or input would have no effect.
-    GameState bet(double bet); ///< Alias for `step` function. Best used when we are in the `PLACE_BETS` state, and the `hit` parameter has no effect.
-    GameState hit(); ///< Helper alias for step.
-    GameState stand(); ///< Helper alias for step.
+    GameState bet(double bet); ///< Place bet and step game. Does nothing if game state is not `PLACE_BETS`
+    GameState bet(); ///< Overload for `bet`, bets the stored bet amount.
     
+    void set_money(double money);
+    void set_bet(double bet); ///< Simmilar to `bet(double bet)`, but doesn't step the game.
+
+    GameState get_state();
+
+    std::set<Card> get_hand();
+    std::set<Card> get_dealer_hand();
+
+    double get_money();
+    double get_bet();
+
     void render(); ///< \brief Renders the game to the terminal.
     
 private:
     Deck _deck;
     GameState _game_state;
-    double _bet;
     std::set<Card> _player_hand;
     std::set<Card> _dealer_hand;
-    double _player_money;
 
+    double _player_money;
+    double _bet;
 
     void deal_cards();
     void deal_card(std::set<Card>& hand);
