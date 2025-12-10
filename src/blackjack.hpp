@@ -65,9 +65,12 @@ public:
     int get_money();
     int get_bet();
 
-    static double get_probabililty_bust(Deck deck, std::set<Card> hand); ///< Gets the probabililty that, given the current deck, and hand, that this hand will receive a card that causes a bust.
-    double get_probabililty_bust(std::set<Card> hand); ///< Gets the probabililty that, given the current deck, and hand, that this hand will receive a card that causes a bust.
-                                                       ///
+    static double get_probability(Deck deck, std::set<Card> hand, unsigned int value); ///< Gets the probabililty that, given the current deck, and hand, that this hand will receive a card that causes the hand value to exceed the given value.
+    static double get_probability_bust(Deck deck, std::set<Card> hand); ///< Gets the probabililty that, given the current deck, and hand, that this hand will receive a card that causes a bust.
+    double get_probability_bust(std::set<Card> hand); ///< Gets the probabililty that, given the current deck, and hand, that this hand will receive a card that causes a bust.
+
+    double get_probability_wining(); ///< Get the probability of the player wining given the current state of the game, deck, and dealer hand.
+
     static int get_hand_value(std::set<Card> hand);
     static int get_hand_value(std::set<Card> hand, bool soft_hand);
 
@@ -87,7 +90,8 @@ private:
 
     void deal_cards();
     void deal_card(std::set<Card>& hand);
-
+    
+    bool should_dealer_hit();
     bool do_dealer_move();
 
     bool did_player_bust();

@@ -110,6 +110,10 @@ bool BlackJack::did_dealer_bust() {
     return get_hand_value(_dealer_hand) > 21;
 }
 
+bool BlackJack::should_dealer_hit() {
+    return get_hand_value(_dealer_hand) <= 16;
+}
+
 bool BlackJack::do_dealer_move() {
     if (get_hand_value(_dealer_hand) <= 16) {
         deal_card(_dealer_hand);
@@ -202,21 +206,25 @@ BlackJack::GameState BlackJack::get_state() {
     return _game_state;
 }
 
-double BlackJack::get_probabililty_bust(Deck deck, std::set<Card> hand) {
-    int total_bad_hands = 0;
+double BlackJack::get_probability(Deck deck, std::set<Card> hand, unsigned int value) {
+    int total_exceeding_hands = 0;
 
     for (auto card : deck.get_cards()) {
         std::set<Card> possible_hand = hand;
         possible_hand.insert(card);
 
-        if (get_hand_value(possible_hand) > 21) 
-            total_bad_hands += 1;
+        if (get_hand_value(possible_hand) > value) 
+            total_exceeding_hands += 1;
     }
 
-    return double(total_bad_hands) / deck.get_cards().size();
+    return double(total_exceeding_hands) / deck.get_cards().size();
 }
-double BlackJack::get_probabililty_bust(std::set<Card> hand) {
-    return get_probabililty_bust(_deck, hand);
+
+double BlackJack::get_probability_bust(Deck deck, std::set<Card> hand) {
+    return get_probability(deck, hand, 21);
+}
+double BlackJack::get_probability_bust(std::set<Card> hand) {
+    return get_probability_bust(_deck, hand);
 }
 
 BlackJack::GameState BlackJack::double_down() {
@@ -234,6 +242,16 @@ BlackJack::GameState BlackJack::double_down() {
         _game_state = GameState::DEALER_TURN;
 
     return _game_state;
+}
+
+double BlackJack::get_probability_wining() {
+    double bust_probability = get_probability_bust(_dealer_hand);
+    double greater_probability = get_probability(_deck, _dealer_hand, 
+            get_hand_value(_player_hand));
+    
+    double probability_loss = greater_probability * (1.0 - bust_probability);
+
+    return (1.0 - probability_loss);
 }
 
 std::optional<BlackJack::GameResults> BlackJack::get_results() {

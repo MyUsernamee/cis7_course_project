@@ -1,4 +1,5 @@
 /// This is a super simple file that just renders the game with a raylib output for fun :)
+/// The code is kind of a mess in this file, but it is there if you want to play with it.
 #include <algorithm>
 #include <cmath>
 #include <raylib.h>
@@ -288,11 +289,11 @@ void draw_ui() {
     DrawText(TextFormat("$%d", game.get_money()), GAME_UI_MARAGIN, GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, GAME_MONEY_COLOR);
     DrawText(TextFormat("-$%d", game.get_bet()), GAME_UI_MARAGIN, GetRenderHeight() - (GAME_UI_TEXT_SIZE * 2.0 + GAME_UI_MARAGIN + GAME_UI_LINE_SPACING), GAME_UI_TEXT_SIZE, GAME_BET_COLOR);
 
-    auto probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probabililty_bust(game.get_hand()) * 100.0));
+    auto probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probability_bust(game.get_hand()) * 100.0));
     DrawText(probability_text, 
             GetRenderWidth() - MeasureText(probability_text, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
             GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, WHITE);
-    probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probabililty_bust(game.get_dealer_hand()) * 100.0));
+    probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probability_bust(game.get_dealer_hand()) * 100.0));
     DrawText(probability_text, 
             GetRenderWidth() - MeasureText(probability_text, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
             (GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, WHITE);
