@@ -284,3 +284,16 @@ std::optional<Card::Suit> Card::suit_from_char(char csuit) {
 std::string Card::as_text() {
     return std::string({rank_as_char(_rank), suit_as_char(_suit)});
 }
+
+int Card::get_value(bool soft_hand) {
+    int value = 0;
+
+    if (_rank == 0) {
+        return soft_hand ? 1 : 11;
+    }
+    else if(_rank >= 10) {
+        return 10;
+    }
+
+    return _rank + 1;
+}

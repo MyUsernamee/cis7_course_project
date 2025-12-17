@@ -48,4 +48,6 @@ struct Card {
     static std::optional<Rank> rank_from_char(char crank);
     static std::optional<Suit> suit_from_char(char csuit);
 
+    int get_value(bool soft_hand); ///< Gets the value of this card according to black jack rules.
+
 };

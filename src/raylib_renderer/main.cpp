@@ -252,9 +252,9 @@ void draw_card(int x, int y, Card card) {
     card_graphics.insert(std::pair<Card, CardGraphic>(card, CardGraphic(card)));
 }
 
-void draw_hand(int x, int y, std::set<Card> hand) {
-    int card_x = -(hand.size() - 1) * CARD_WIDTH / 2 + x;
-    for (auto card : hand) {
+void draw_hand(int x, int y, Hand hand) {
+    int card_x = -(hand.get_cards().size() - 1) * CARD_WIDTH / 2 + x;
+    for (auto card : hand.get_cards()) {
         draw_card(card_x, y, card);
         card_x += CARD_WIDTH + 2;
     }
@@ -289,21 +289,21 @@ void draw_ui() {
     DrawText(TextFormat("$%d", game.get_money()), GAME_UI_MARAGIN, GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, GAME_MONEY_COLOR);
     DrawText(TextFormat("-$%d", game.get_bet()), GAME_UI_MARAGIN, GetRenderHeight() - (GAME_UI_TEXT_SIZE * 2.0 + GAME_UI_MARAGIN + GAME_UI_LINE_SPACING), GAME_UI_TEXT_SIZE, GAME_BET_COLOR);
 
-    auto probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probability_bust(game.get_hand()) * 100.0));
+    auto probability_text = TextFormat("Probability Of Bust: %d", int(game.get_player_hand().get_bust_probability(game.get_deck()) * 100.0));
     DrawText(probability_text, 
             GetRenderWidth() - MeasureText(probability_text, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
             GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, WHITE);
-    probability_text = TextFormat("Probability Of Bust: %d", int(game.get_probability_bust(game.get_dealer_hand()) * 100.0));
+    probability_text = TextFormat("Probability Of Bust: %d", int(game.get_dealer_hand().get_bust_probability(game.get_deck()) * 100.0));
     DrawText(probability_text, 
             GetRenderWidth() - MeasureText(probability_text, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
             (GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, WHITE);
 
-    if (!game.get_hand().empty() && !game.get_dealer_hand().empty()) {
-        auto hand_score_text = TextFormat("%d", game.get_hand_value(game.get_hand()));
+    if (!game.get_player_hand().empty() && !game.get_dealer_hand().empty()) {
+        auto hand_score_text = TextFormat("%d", game.get_player_hand().get_value());
         DrawText(hand_score_text, GetRenderWidth() / 2 - MeasureText(hand_score_text, GAME_UI_TEXT_SIZE) / 2,
                 GetRenderHeight() - CARD_HEIGHT * 3 / 2 - GAME_UI_MARAGIN * 2 - GAME_UI_TEXT_SIZE / 2, 
                 GAME_UI_TEXT_SIZE, WHITE);
-        hand_score_text = TextFormat("%d", game.get_hand_value(game.get_dealer_hand()));
+        hand_score_text = TextFormat("%d", game.get_dealer_hand().get_value());
         DrawText(hand_score_text, GetRenderWidth() / 2 - MeasureText(hand_score_text, GAME_UI_TEXT_SIZE) / 2,
                 CARD_HEIGHT * 3 / 2 + GAME_UI_MARAGIN * 2 - GAME_UI_TEXT_SIZE / 2, 
                 GAME_UI_TEXT_SIZE, WHITE);
@@ -355,7 +355,7 @@ void render_game() {
     queue_card_graphic_death();
 
     draw_hand(GetRenderWidth() / 2, CARD_HEIGHT, game.get_dealer_hand());
-    draw_hand(GetRenderWidth() / 2, GetRenderHeight() - CARD_HEIGHT, game.get_hand());
+    draw_hand(GetRenderWidth() / 2, GetRenderHeight() - CARD_HEIGHT, game.get_player_hand());
 
     draw_ui();
 

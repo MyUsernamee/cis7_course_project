@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "blackjack.hpp"
+#include "terminal_renderer.hpp"
 
 int main () {
 
@@ -13,7 +14,7 @@ int main () {
     
     for (int i = 0; i <= 100; i++) {
         game.step(false);
-        game.render();
+        render_terminal(game);
     }
     
     return 0;
