@@ -11,7 +11,6 @@ class Hand {
 
 public:
     Hand();
-    Hand(Hand& other);
 
     int get_value(); ///< Get's the value of the hand according to blackjack rules. Chooses higheset non winning hand;
 

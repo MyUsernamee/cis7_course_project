@@ -11,7 +11,6 @@ class Deck {
     
 public:
     Deck();
-    Deck(Deck& other);
     Deck(std::set<Card> cards);
 
     bool take_card(Card card); ///< \brief Attempts to remove a card from the deck. 

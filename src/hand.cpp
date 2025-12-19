@@ -6,10 +6,6 @@ Hand::Hand() {
 
 }
 
-Hand::Hand(Hand& other) {
-    _cards = std::set(other._cards);
-}
-
 int Hand::get_value() {
     int value = 0;
     int num_aces = 0;

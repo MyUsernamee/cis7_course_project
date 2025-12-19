@@ -9,11 +9,6 @@ Deck::Deck() {
                                                                                  // 52 cards to deck.
 }
 
-Deck::Deck(Deck& other) {
-    _cards = std::set(other._cards);
-    _missing_cards = std::set(other._missing_cards);
-}
-
 Deck::Deck(std::set<Card> cards) : _cards(cards) {};
 
 bool Deck::has_card(Card card) {
