@@ -4,7 +4,7 @@ This is a course project that was completed as a requirment of MVC's CIS-7 (Disc
 
 ## Installation
 
-To download and use this program, you should be able to obtain a binary from the [releases]() tab on GitHub, or as an [artifact]() in the GitHub actions.
+To download and use this program, you should be able to obtain a binary from the [releases](https://github.com/MyUsernamee/cis7_course_project/releases/tag/v1.0.0) tab on GitHub, or as an [artifact](https://github.com/MyUsernamee/cis7_course_project/actions/runs/20362888029) in the GitHub actions.
 
 If you can't find a binary there, you can manually compile the program your self as outlined in the [Compiling](#compiling).
 
