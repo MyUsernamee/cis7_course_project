@@ -103,8 +103,8 @@ bool BlackJack::did_dealer_bust() {
     return _dealer_hand.get_value() > 21;
 }
 
-bool BlackJack::should_dealer_hit() {
-    return _dealer_hand.get_value() <= 16;
+bool BlackJack::should_dealer_hit(Hand dealer_hand) {
+    return dealer_hand.get_value() <= 16;
 }
 
 bool BlackJack::do_dealer_move() {
@@ -189,4 +189,41 @@ std::optional<BlackJack::GameResults> BlackJack::get_results() {
 
 Deck BlackJack::get_deck() {
     return _deck;
+}
+
+double BlackJack::get_player_wining_probability(bool hit, Hand player_hand, Hand dealer_hand, Deck deck) {
+    double probability = 1.0;
+
+    if (dealer_hand.get_value() > 21 && dealer_hand.get_value() != player_hand.get_value())
+        return probability; // Dealer already lost. 100% we are going to win
+    else if (dealer_hand.get_value() > 21)
+        return 0.0; // We are going to tie.
+
+
+    if (hit) {
+        probability *= (1.0 - player_hand.get_bust_probability(deck));
+        probability *= player_hand.get_score_probability(deck, dealer_hand.get_value()); // If they dealer didn't bust,
+                                                                                           // What are the odds we get 
+                                                                                           // a get a card that makes us win.
+    }
+    
+    if (should_dealer_hit(dealer_hand)) {
+        // Go through every remaining possible card, and rerun our above algorithm.
+        for (auto card: deck.get_cards()) {
+            Deck deck_clone = Deck(deck);
+            Hand dealer_hand_clone = Hand(dealer_hand);
+
+            dealer_hand_clone.add_card(card);
+            deck_clone.get_cards().erase(card);
+
+            probability *= get_player_wining_probability(false, player_hand, dealer_hand_clone, deck_clone);
+        }
+    }
+
+    return probability;
+
+}
+
+double BlackJack::get_player_wining_probability(bool hit) {
+    return get_player_wining_probability(hit, _player_hand, _dealer_hand, _deck);
 }

@@ -70,6 +70,9 @@ public:
 
     std::optional<BlackJack::GameResults> get_results();
 
+    static double get_player_wining_probability(bool hit, Hand player_hand, Hand dealer_hand, Deck deck);
+    double get_player_wining_probability(bool hit);
+
 private:
     Deck _deck;
     GameState _game_state;
@@ -81,7 +84,7 @@ private:
 
     void deal_cards();
     
-    bool should_dealer_hit();
+    static bool should_dealer_hit(Hand dealer_hand);
     bool do_dealer_move();
 
     bool did_player_bust();
