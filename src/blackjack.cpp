@@ -192,11 +192,6 @@ Deck BlackJack::get_deck() {
     return _deck;
 }
 
-double BlackJack::get_player_wining_probability(bool hit, Hand player_hand, Hand dealer_hand, Deck deck) {
-
-
-}
-
 double BlackJack::get_player_wining_probability(bool hit) {
     if (_game_state == PLACE_BETS || _game_state == RESET)
         return 1.0; // Game hasn't started

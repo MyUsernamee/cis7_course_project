@@ -70,7 +70,7 @@ public:
 
     std::optional<BlackJack::GameResults> get_results();
 
-    double get_player_wining_probability(bool hit);
+    double get_player_wining_probability(bool hit); ///< Get the probability of winning. If hit is true returns the probability of winning "next hit", also factors in the probability of busting. If hit is false, probability of winning assuming we stand / keep this hand.
 
 private:
     Deck _deck;
