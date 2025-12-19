@@ -70,7 +70,6 @@ public:
 
     std::optional<BlackJack::GameResults> get_results();
 
-    static double get_player_wining_probability(bool hit, Hand player_hand, Hand dealer_hand, Deck deck);
     double get_player_wining_probability(bool hit);
 
 private:

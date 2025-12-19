@@ -193,34 +193,34 @@ Deck BlackJack::get_deck() {
 }
 
 double BlackJack::get_player_wining_probability(bool hit, Hand player_hand, Hand dealer_hand, Deck deck) {
-    double probability = 1.0;
 
-    if (player_hand.get_value() > 21)
-        return 0.0; // Tie or loss.
-    if (dealer_hand.get_value() > 21)
-        return probability; // We didn't bust but the dealer did, we won.
-
-    if (hit) {
-        // Probability of getting higher then dealer, but not busting.
-        double probability_dealt_higher = player_hand.get_score_probability(deck, dealer_hand.get_value());
-        double bust_probability = player_hand.get_bust_probability(deck);
-        probability *= (probability_dealt_higher - bust_probability);
-
-    }
-    else {
-        probability *= dealer_hand.get_value() >= player_hand.get_value() ? 0.0 : 1.0;
-    }
-   
-    if (should_dealer_hit(dealer_hand)){
-        probability *= 1.0 - (dealer_hand.get_score_probability(deck, player_hand.get_value()) - dealer_hand.get_bust_probability(deck)) ;
-    }
-
-    return probability;
 
 }
 
 double BlackJack::get_player_wining_probability(bool hit) {
     if (_game_state == PLACE_BETS || _game_state == RESET)
         return 1.0; // Game hasn't started
-    return get_player_wining_probability(hit, _player_hand, _dealer_hand, _deck);
+    double probability = 1.0;
+
+    if (_player_hand.get_value() > 21)
+        return 0.0; // Tie or loss.
+    if (_dealer_hand.get_value() > 21)
+        return probability; // We didn't bust but the dealer did, we won.
+
+    if (hit) {
+        // Probability of getting higher then dealer, but not busting.
+        double probability_dealt_higher = _player_hand.get_score_probability(_deck, _dealer_hand.get_value());
+        double bust_probability = _player_hand.get_bust_probability(_deck);
+        probability *= (probability_dealt_higher - bust_probability);
+
+    }
+    else {
+        probability *= _dealer_hand.get_value() >= _player_hand.get_value() ? 0.0 : 1.0;
+    }
+   
+    if (should_dealer_hit(_dealer_hand)){
+        probability *= 1.0 - (_dealer_hand.get_score_probability(_deck, _player_hand.get_value()) - _dealer_hand.get_bust_probability(_deck)) ;
+    }
+
+    return probability;                   
 }
