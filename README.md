@@ -10,7 +10,7 @@ If you can't find a binary there, you can manually compile the program your self
 
 ## Usage
 
-### TODO: Write usage doc.
+Download a release as mentioned above and run `blackjack`. Use mouse to change bet. Use on screen buttons to play game.
 
 ## Documentation
 
@@ -27,6 +27,7 @@ If you wish to compile locally, you will need:
 
 ```
 cmake>=3.31.6
+raylib>=5.0
 (Some c++17 compiler)
 ```
 
