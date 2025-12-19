@@ -2,20 +2,29 @@
 #include "hand.hpp"
 #include "card.hpp"
 
-int Hand::get_value(bool soft_hand) {
+Hand::Hand() {
+
+}
+
+Hand::Hand(Hand& other) {
+    _cards = std::set(other._cards);
+}
+
+int Hand::get_value() {
     int value = 0;
+    int num_aces = 0;
 
     for (auto card : _cards) {
-        int hand_value = card.get_value(soft_hand);
+        if (card._rank == Card::ACE) {
+            num_aces += 1;
+            continue;
+        }
+        int hand_value = card.get_value(false);
         value += hand_value;
     }
-
-    return value;
-} 
-int Hand::get_value() {
-    int value = get_value(false);
-    if (value > 21)
-        value = get_value(true);
+    
+    int num_11_aces = std::min((21 - value) / 11, num_aces);
+    value += num_11_aces * 11 + (num_aces - num_11_aces);
 
     return value;
 } 
@@ -41,7 +50,7 @@ void Hand::deal_card(Deck& deck) {
     deal_cards(deck, 1);
 }
 
-std::set<Card> Hand::get_cards() {
+std::set<Card>& Hand::get_cards() {
     return _cards;
 } 
 
@@ -54,20 +63,11 @@ double Hand::get_bust_probability(Deck deck) {
 } 
 
 double Hand::get_score_probability(Deck deck, int score) {
-    int value = get_value();
-    if (value > score)
-        return 1.0; // We are already higher, 100% chance next is going to be higher.
-    
-    int higher_count = 0;
+    if (get_value() > score)
+        return 1.0;
+    int card_max_value = (score - get_value());
 
-    for (auto card : deck.get_cards()) {
-        int possible_value = value + card.get_value(true); // Assume soft;
-
-        if (possible_value > score)
-            higher_count += 1;
-    }
-
-    return (double)higher_count / (double)deck.get_cards().size();
+    return 1.0 - ((double)deck.num_cards_less_than(card_max_value) / deck.get_cards().size());
 } 
 
 std::string Hand::as_string() {

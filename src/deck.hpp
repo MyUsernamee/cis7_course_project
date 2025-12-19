@@ -11,6 +11,7 @@ class Deck {
     
 public:
     Deck();
+    Deck(Deck& other);
     Deck(std::set<Card> cards);
 
     bool take_card(Card card); ///< \brief Attempts to remove a card from the deck. 
@@ -24,11 +25,11 @@ public:
     void add_card(Card card); ///< Adds a card to the deck, does nothing if card is already in deck.
     bool add_card(Card::Rank rank, Card::Suit suit); ///< Same as `Deck::add_card(Card card)` but
                                                      ///< with rank and suit instead.
-
     std::set<Card> get_cards(); ///< Returns a `std::set` containing all cards in the deck
     bool has_card(Card card); ///< Returns true if the deck contains this card.
 
+    int num_cards_less_than(int value); ///< Returns the number of cards with a minimum value less than `value`
 private:
     std::set<Card> _cards;
-
+    std::set<Card> _missing_cards;
 };

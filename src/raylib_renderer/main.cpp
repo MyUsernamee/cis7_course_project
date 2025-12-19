@@ -298,6 +298,19 @@ void draw_ui() {
             GetRenderWidth() - MeasureText(probability_text, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
             (GAME_UI_MARAGIN), GAME_UI_TEXT_SIZE, WHITE);
 
+    auto win_probability_no_hit = game.get_player_wining_probability(false);
+    auto win_probability_hit = game.get_player_wining_probability(true);
+
+    auto win_probability_text_no_hit = TextFormat("Probability Of Wining: %d", int(win_probability_no_hit * 100.0));
+    auto win_probability_text_hit = TextFormat("Probability Of Wining If Hit: %d", int(win_probability_hit * 100.0));
+    DrawText(win_probability_text_no_hit, 
+            GetRenderWidth() - MeasureText(win_probability_text_no_hit, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
+            GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN * 2), GAME_UI_TEXT_SIZE, WHITE);
+    DrawText(win_probability_text_hit, 
+            GetRenderWidth() - MeasureText(win_probability_text_hit, GAME_UI_TEXT_SIZE) - GAME_UI_TEXT_SIZE,
+            GetRenderHeight() - (GAME_UI_TEXT_SIZE + GAME_UI_MARAGIN * 3), GAME_UI_TEXT_SIZE, WHITE);
+
+
     if (!game.get_player_hand().empty() && !game.get_dealer_hand().empty()) {
         auto hand_score_text = TextFormat("%d", game.get_player_hand().get_value());
         DrawText(hand_score_text, GetRenderWidth() / 2 - MeasureText(hand_score_text, GAME_UI_TEXT_SIZE) / 2,
