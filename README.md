@@ -17,11 +17,11 @@ Download a release as mentioned above and run `blackjack`. Use mouse to change b
 All code is documented in the `docs` folder. It contains the required course documentation and other documents outlining the structure of the code. All code should be documented with docstrings.
 
 For comprehensive, up to date, code documentation, use [doxygen](https://www.doxygen.nl/index.html).
-Otherwise `doxygen` docs should be generated and stored in the `docs/doxygen/` folder.
+Otherwise `doxygen` docs should be generated and available [online](http://github.myusername.me/index.html).
+
+For a more formal write-up, there is a pdf in `docs/`. In docs you can also find the typst document used to generate that pdf.
 
 ## Compiling
-
-There should be auto-compiled binaries in the [releases]() tabs, or as [artifacts]() in GitHub actions.
 
 If you wish to compile locally, you will need:
 
